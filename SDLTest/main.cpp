@@ -16,6 +16,10 @@ const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
 const string BACKGROUND_IMG = "/Users/jonataschagas/Documents/images/grass_bg.jpg";
 
+// the highest the moving speed the slowest the object
+// moves on the screen
+const int MOVING_SPEED = 5;
+
 struct ColorKeyRGB
 {
     int r = 0;
@@ -282,10 +286,10 @@ void GameObject::handle_input(SDL_Event* event)
     {
         switch( event->key.keysym.sym )
         {
-            case SDLK_UP: yVel -= h / 2; currentAction = ACTION_UP; break;
-            case SDLK_DOWN: yVel += h / 2; currentAction = ACTION_DOWN; break;
-            case SDLK_LEFT: xVel -= w / 2; currentAction = ACTION_LEFT; break;
-            case SDLK_RIGHT: xVel += w / 2; currentAction = ACTION_RIGHT; break;
+            case SDLK_UP: yVel -= h / MOVING_SPEED; currentAction = ACTION_UP; break;
+            case SDLK_DOWN: yVel += h / MOVING_SPEED; currentAction = ACTION_DOWN; break;
+            case SDLK_LEFT: xVel -= w / MOVING_SPEED; currentAction = ACTION_LEFT; break;
+            case SDLK_RIGHT: xVel += w / MOVING_SPEED; currentAction = ACTION_RIGHT; break;
         }
     }
 }
