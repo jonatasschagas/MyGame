@@ -6,12 +6,26 @@
 #include <iostream>
 #include "SDL_collide.h"
 
+using namespace std;
+
 const int SCREEN_WIDTH = 640;
 const int SCREEN_HEIGHT = 480;
+const int LEVEL_WIDTH = 1280;
+const int LEVEL_HEIGHT = 960;
 const int SCREEN_BPP = 32;
 const int FRAMES_PER_SECOND = 20;
+const string BACKGROUND_IMG = "/Users/jonataschagas/Documents/images/grass_bg.jpg";
 
-using namespace std;
+struct ColorKeyRGB
+{
+    int r = 0;
+    int g = 0;
+    int b = 0;
+};
+
+ColorKeyRGB colorKeyScreen;
+SDL_Rect camera = { 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT };
+
 ////////////////////////////////////////
 
 #define SDL_COLLIDE_MAX(a,b)	((a > b) ? a : b)
@@ -19,12 +33,13 @@ using namespace std;
 
 // http://sdl-collide.sourceforge.net
 
-void fill_blankscreen(SDL_Surface* screen)
+void fill_colorkey(SDL_Surface* screen)
 {
-    SDL_FillRect( screen, &screen->clip_rect, SDL_MapRGB( screen->format, 0, 0, 0 ) );
+    SDL_FillRect(screen,&screen->clip_rect,SDL_MapRGB(screen->format,
+                                                         colorKeyScreen.r, colorKeyScreen.g, colorKeyScreen.b));
 }
 
-SDL_Surface *load_image( string filename )
+SDL_Surface *load_image( string filename, ColorKeyRGB colorKeyStr )
 {
     SDL_Surface* loadedImage = NULL;
     SDL_Surface* optimizedImage = NULL;
@@ -34,6 +49,12 @@ SDL_Surface *load_image( string filename )
     {
         optimizedImage = SDL_DisplayFormat( loadedImage );
         SDL_FreeSurface( loadedImage );
+        
+        if( optimizedImage != NULL )
+        {
+            Uint32 colorkey = SDL_MapRGB( optimizedImage->format, colorKeyStr.r, colorKeyStr.g, colorKeyStr.b );
+            SDL_SetColorKey( optimizedImage, SDL_SRCCOLORKEY, colorkey );
+        }
     }
     
     return optimizedImage;
@@ -170,23 +191,41 @@ bool Timer::is_paused()
 }
 /////////////////////////////////////////////////////////////
 
+const int ACTION_UP    = 0;
+const int ACTION_DOWN  = 1;
+const int ACTION_LEFT  = 2;
+const int ACTION_RIGHT = 3;
+
+// each animation has a name
+// and a list of clips
+struct Animation {
+    int action;
+    SDL_Surface* image;
+    int numberOfFrames;
+    int currentFrame;
+    vector<SDL_Rect*> listClips;
+};
+
 class GameObject
 {
 protected:
-    int x, y, w, h, offset,velocity,frame,status,numberOfFrames,xVel, yVel;
-    SDL_Surface* image;
-    vector<SDL_Rect*> listClips;
+    int x, y, w, h, offset,velocity,xVel, yVel,currentAction;
+    bool cameraFocused = false;
+    vector<Animation*> listAnimations;
     
 public:
     GameObject();
     virtual void handle_input(SDL_Event* event);
     virtual void move(vector<GameObject*> list);
     virtual void show(SDL_Surface* screen);
-    SDL_Surface* getImage();
+    // sets camera over the game object
+    virtual void setCamera();
+    Animation* getAnimation(int action);
     int getX();
     int getY();
     int getW();
     int getH();
+    bool isCameraFocused();
 };
 
 GameObject::GameObject()
@@ -200,9 +239,21 @@ GameObject::GameObject()
     yVel = 0;
 }
 
-SDL_Surface* GameObject::getImage()
+Animation* GameObject::getAnimation(int action)
 {
-    return image;
+    for(vector<Animation*>::iterator it = listAnimations.begin(); it != listAnimations.end(); ++it) {
+        Animation* obj = *it;
+        if(obj && obj->action == action)
+        {
+            return obj;
+        }
+    }
+    return NULL;
+}
+
+bool GameObject::isCameraFocused()
+{
+    return cameraFocused;
 }
 
 int GameObject::getX()
@@ -231,10 +282,10 @@ void GameObject::handle_input(SDL_Event* event)
     {
         switch( event->key.keysym.sym )
         {
-            case SDLK_UP: yVel -= h / 2; break;
-            case SDLK_DOWN: yVel += h / 2; break;
-            case SDLK_LEFT: xVel -= w / 2; break;
-            case SDLK_RIGHT: xVel += w / 2; break;
+            case SDLK_UP: yVel -= h / 2; currentAction = ACTION_UP; break;
+            case SDLK_DOWN: yVel += h / 2; currentAction = ACTION_DOWN; break;
+            case SDLK_LEFT: xVel -= w / 2; currentAction = ACTION_LEFT; break;
+            case SDLK_RIGHT: xVel += w / 2; currentAction = ACTION_RIGHT; break;
         }
     }
 }
@@ -246,7 +297,7 @@ void GameObject::move(vector<GameObject*> list)
     
     x += xVel;
     
-    if( ( x < 0 ) || ( x + w > SCREEN_WIDTH ) )
+    if( ( x < 0 ) || ( x + w > LEVEL_WIDTH ) )
     {
         //move back
         x -= xVel;
@@ -256,12 +307,13 @@ void GameObject::move(vector<GameObject*> list)
     y += yVel;
     
     //If the dot went too far up or down
-    if( ( y < 0 ) || ( y + h > SCREEN_HEIGHT ) )
+    if( ( y < 0 ) || ( y + h > LEVEL_HEIGHT ) )
     {
         //move back
         y -= yVel;
     }
     
+    // tests the collision against other objects in the screen
     for(vector<GameObject*>::iterator it = list.begin(); it != list.end(); ++it) {
         GameObject* obj = *it;
         if(obj && obj != this)
@@ -276,7 +328,6 @@ void GameObject::move(vector<GameObject*> list)
                 y = oY;
                 return;
             }
-
         }
     }
     
@@ -284,59 +335,157 @@ void GameObject::move(vector<GameObject*> list)
 
 void GameObject::show(SDL_Surface* screen)
 {
-    if(frame >= numberOfFrames)
-    {
-        frame = 0;
-    }
-    else
-    {
-        frame++;
-    }
     
-    cout << frame << endl;
+    // here we will show the animation depending on the
+    // action of the input
+    Animation* animation = getAnimation(currentAction);
     
-    //Show the dot
-    if(listClips.size() > 0)
+    if(animation)
     {
-        apply_surface( x, y, image, screen,listClips[frame]);
+        if(animation->currentFrame >= animation->numberOfFrames)
+        {
+            animation->currentFrame = 0;
+        }
+        else
+        {
+            animation->currentFrame++;
+        }
+        
+        // if this is true we focus the camera
+        // on the game object
+        if(cameraFocused)
+        {
+            if(animation->numberOfFrames > 0)
+            {
+                apply_surface( x - camera.x, y - camera.y, animation->image
+                              ,screen,animation->listClips[animation->currentFrame]);
+            }
+        }
+        else
+        {
+            if(animation->numberOfFrames > 0)
+            {
+                apply_surface( x, y, animation->image , screen,animation->listClips[animation->currentFrame]);
+            }
+            else
+            {
+                apply_surface( x, y, animation->image , screen,NULL);
+            }   
+        }
     }
-    else
-    {
-        apply_surface( x, y, image, screen,NULL);
-    }
+}
 
+void GameObject::setCamera()
+{
+    //Center the camera over the dot
+    camera.x = ( x + this->w / 2 ) - SCREEN_WIDTH / 2;
+    camera.y = ( y + this->h / 2 ) - SCREEN_HEIGHT / 2;
+    
+    //Keep the camera in bounds.
+    if( camera.x < 0 )
+    {
+        camera.x = 0;
+    }
+    if( camera.y < 0 )
+    {
+        camera.y = 0;
+    }
+    if( camera.x > LEVEL_WIDTH - camera.w )
+    {
+        camera.x = LEVEL_WIDTH - camera.w;
+    }
+    if( camera.y > LEVEL_HEIGHT - camera.h )
+    {
+        camera.y = LEVEL_HEIGHT - camera.h;
+    }
 }
 
 /////////////////////////////////////////////////////////////////////////////
 
-const string SONIC_MESH = "/Users/jonataschagas/Documents/images/sonic_running.jpg";
-class Sonic: public GameObject
+const string GRANT_UP = "/Users/jonataschagas/Documents/images/grant_up.jpg";
+const string GRANT_DOWN = "/Users/jonataschagas/Documents/images/grant_down.jpg";
+const string GRANT_LEFT = "/Users/jonataschagas/Documents/images/grant_left.jpg";
+const string GRANT_RIGHT = "/Users/jonataschagas/Documents/images/grant_right.jpg";
+class Grant: public GameObject
 {
     public:
-        Sonic();
+        Grant();
 };
 
-Sonic::Sonic()
+Grant::Grant()
 {
-    image = load_image(SONIC_MESH);
-    numberOfFrames = 8;
-    frame = 0;
-    offset = 0;
-    velocity = 0;
-    w = 100;
-    h = 100;
-    for(int i = 0; i <= numberOfFrames; i++)
+    x = 0, y = 0, w = 40, h = 45, offset = 0,velocity = 0,xVel = 0, yVel = 0, currentAction = ACTION_RIGHT;
+    cameraFocused = true;
+    
+    ColorKeyRGB colorKeyGrant;
+    colorKeyGrant.r = 0;
+    colorKeyGrant.r = 0;
+    colorKeyGrant.r = 0;
+    
+    Animation* animationUp = new Animation;
+    animationUp->image = load_image(GRANT_UP,colorKeyGrant);
+    animationUp->currentFrame = 0;
+    animationUp->action = ACTION_UP;
+    animationUp->numberOfFrames = 8;
+    for(int i = 0; i <= animationUp->numberOfFrames; i++)
     {
         SDL_Rect* clip = new SDL_Rect;
         clip->h = h;
         clip->w = w;
         clip->x = i * w;
-        
-        cout << clip->x << endl;
-        
         clip->y = 0;
-        listClips.push_back(clip);
+        animationUp->listClips.push_back(clip);
     }
+    listAnimations.push_back(animationUp);
+    
+    Animation* animationDown = new Animation;
+    animationDown->image = load_image(GRANT_DOWN,colorKeyGrant);
+    animationDown->currentFrame = 0;
+    animationDown->action = ACTION_DOWN;
+    animationDown->numberOfFrames = 8;
+    for(int i = 0; i <= animationDown->numberOfFrames; i++)
+    {
+        SDL_Rect* clip = new SDL_Rect;
+        clip->h = h;
+        clip->w = w;
+        clip->x = i * w;
+        clip->y = 0;
+        animationDown->listClips.push_back(clip);
+    }
+    listAnimations.push_back(animationDown);
+    
+    Animation* animationLeft = new Animation;
+    animationLeft->image = load_image(GRANT_LEFT,colorKeyGrant);
+    animationLeft->currentFrame = 0;
+    animationLeft->action = ACTION_LEFT;
+    animationLeft->numberOfFrames = 8;
+    for(int i = 0; i <= animationLeft->numberOfFrames; i++)
+    {
+        SDL_Rect* clip = new SDL_Rect;
+        clip->h = h;
+        clip->w = w;
+        clip->x = i * w;
+        clip->y = 0;
+        animationLeft->listClips.push_back(clip);
+    }
+    listAnimations.push_back(animationLeft);
+    
+    Animation* animationRight = new Animation;
+    animationRight->image = load_image(GRANT_RIGHT,colorKeyGrant);
+    animationRight->currentFrame = 0;
+    animationRight->action = ACTION_RIGHT;
+    animationRight->numberOfFrames = 8;
+    for(int i = 0; i <= animationRight->numberOfFrames; i++)
+    {
+        SDL_Rect* clip = new SDL_Rect;
+        clip->h = h;
+        clip->w = w;
+        clip->x = i * w;
+        clip->y = 0;
+        animationRight->listClips.push_back(clip);
+    }
+    listAnimations.push_back(animationRight);
+    
 }
 
 /////////////////////////////////////////////////////////////////////////////
@@ -352,20 +501,25 @@ public:
 
 Wall::Wall()
 {
-    image = load_image(WALL_MESH);
-    w = 50;
-    h = 400;
-    x = 400;
-    y = 50;
-    frame = 0;
-    numberOfFrames = 0;
+    x = 400, y = 50, w = 50, h = 400, offset = 0,velocity = 0,xVel = 0, yVel = 0, currentAction = 0;
+    
+    ColorKeyRGB colorKeyWall;
+    colorKeyWall.r = 0;
+    colorKeyWall.r = 0;
+    colorKeyWall.r = 0;
+    
+    Animation* animationDull = new Animation;
+    animationDull->image = load_image(WALL_MESH,colorKeyWall);
+    animationDull->currentFrame = 0;
+    animationDull->action = 0;
+    animationDull->numberOfFrames = 0;
+    listAnimations.push_back(animationDull);
 }
 
 void Wall::move(){}
 void Wall::handle_input(SDL_Event* event){}
 
 /////////////////////////////////////////////////////////////////////////////
-
 
 int main(int argc, char ** argv)
 {
@@ -375,21 +529,22 @@ int main(int argc, char ** argv)
     }
     
     SDL_Surface *screen = SDL_SetVideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, SCREEN_BPP, SDL_SWSURFACE);
+    SDL_Surface *background = load_image(BACKGROUND_IMG,colorKeyScreen);
     SDL_Event event;
     bool quit = false;
     Timer fps;
-    Sonic sonic;
-    Wall wall;
+    Grant grant;
+    //Wall wall;
     vector<GameObject*> listGameObjects(2);
-    listGameObjects.push_back(&sonic);
-    listGameObjects.push_back(&wall);
+    listGameObjects.push_back(&grant);
+    //listGameObjects.push_back(&wall);
     
     if(init(screen) == false)
     {
         return 1;
     }
     
-    SDL_WM_SetCaption("Hello World",NULL);
+    SDL_WM_SetCaption("My Game",NULL);
     
     while( quit == false )
     {
@@ -413,7 +568,10 @@ int main(int argc, char ** argv)
             }
         }
         
-        fill_blankscreen(screen);
+        fill_colorkey(screen);
+        
+        //Show the background
+        apply_surface( 0, 0, background, screen, &camera );
         
         // logic of the game
         
@@ -423,6 +581,10 @@ int main(int argc, char ** argv)
             if(obj)
             {
                 obj->move(listGameObjects);
+                if(obj->isCameraFocused())
+                {
+                    obj->setCamera();
+                }
                 obj->show(screen);
             }
         }

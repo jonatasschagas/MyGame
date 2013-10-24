@@ -8,11 +8,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/main.cpp"
-         timestampString = "404253557.355566"
+         timestampString = "404324804.74134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "409"
-         endingLineNumber = "409"
+         startingLineNumber = "562"
+         endingLineNumber = "562"
          landmarkName = "main(int argc, char ** argv)"
          landmarkType = "7">
       </FileBreakpoint>
@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/main.cpp"
-         timestampString = "404251431.893796"
+         timestampString = "404324804.74134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "267"
-         endingLineNumber = "267"
+         startingLineNumber = "311"
+         endingLineNumber = "311"
          landmarkName = "GameObject::move(vector&lt;GameObject*&gt; list)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -34,11 +34,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/main.cpp"
-         timestampString = "404251431.893796"
+         timestampString = "404324804.74134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "269"
-         endingLineNumber = "269"
+         startingLineNumber = "313"
+         endingLineNumber = "313"
          landmarkName = "GameObject::move(vector&lt;GameObject*&gt; list)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -47,11 +47,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/main.cpp"
-         timestampString = "404251431.893796"
+         timestampString = "404324804.74134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "275"
-         endingLineNumber = "275"
+         startingLineNumber = "320"
+         endingLineNumber = "320"
          landmarkName = "GameObject::move(vector&lt;GameObject*&gt; list)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,37 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/main.cpp"
-         timestampString = "404253557.355566"
+         timestampString = "404324804.74134"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "307"
-         endingLineNumber = "307"
-         landmarkName = "GameObject::show(SDL_Surface* screen)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SDLTest/main.cpp"
-         timestampString = "404253557.355566"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "299"
-         endingLineNumber = "299"
-         landmarkName = "GameObject::show(SDL_Surface* screen)"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "No"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "SDLTest/main.cpp"
-         timestampString = "404253557.355566"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "306"
-         endingLineNumber = "306"
+         startingLineNumber = "345"
+         endingLineNumber = "345"
          landmarkName = "GameObject::show(SDL_Surface* screen)"
          landmarkType = "5">
       </FileBreakpoint>
