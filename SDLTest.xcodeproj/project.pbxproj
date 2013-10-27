@@ -14,6 +14,10 @@
 		67234AF31809D218009E98A7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67234AF21809D218009E98A7 /* Foundation.framework */; };
 		67234AF51809D222009E98A7 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67234AF41809D222009E98A7 /* Cocoa.framework */; };
 		67234AF71809D4AC009E98A7 /* SDL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 67234AF61809D4AC009E98A7 /* SDL.framework */; };
+		676BBCF7181BCD5800CBAA92 /* GameObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 676BBCF5181BCD5800CBAA92 /* GameObject.cpp */; };
+		676BBCFA181BCE0300CBAA92 /* Grant.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 676BBCF8181BCE0300CBAA92 /* Grant.cpp */; };
+		676BBCFD181BCE6300CBAA92 /* Timer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 676BBCFB181BCE6300CBAA92 /* Timer.cpp */; };
+		676BBD0C181BD17A00CBAA92 /* TileMap.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 676BBD0A181BD17A00CBAA92 /* TileMap.cpp */; };
 		678834B0181855A3001BA736 /* SDL_collide.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 678834AF181855A3001BA736 /* SDL_collide.cpp */; };
 /* End PBXBuildFile section */
 
@@ -40,6 +44,15 @@
 		67234AF21809D218009E98A7 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		67234AF41809D222009E98A7 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		67234AF61809D4AC009E98A7 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SDL.framework; sourceTree = "<group>"; };
+		676BBCF5181BCD5800CBAA92 /* GameObject.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = GameObject.cpp; path = SDLTest/GameObject.cpp; sourceTree = "<group>"; };
+		676BBCF6181BCD5800CBAA92 /* GameObject.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = GameObject.h; path = SDLTest/GameObject.h; sourceTree = "<group>"; };
+		676BBCF8181BCE0300CBAA92 /* Grant.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Grant.cpp; path = SDLTest/Grant.cpp; sourceTree = "<group>"; };
+		676BBCF9181BCE0300CBAA92 /* Grant.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Grant.h; path = SDLTest/Grant.h; sourceTree = "<group>"; };
+		676BBCFB181BCE6300CBAA92 /* Timer.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Timer.cpp; path = SDLTest/Timer.cpp; sourceTree = "<group>"; };
+		676BBCFC181BCE6300CBAA92 /* Timer.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = Timer.h; path = SDLTest/Timer.h; sourceTree = "<group>"; };
+		676BBD0A181BD17A00CBAA92 /* TileMap.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = TileMap.cpp; path = SDLTest/TileMap.cpp; sourceTree = "<group>"; };
+		676BBD0B181BD17A00CBAA92 /* TileMap.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; name = TileMap.h; path = SDLTest/TileMap.h; sourceTree = "<group>"; };
+		676BBD0D181BD8A600CBAA92 /* RenderingUtils.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = RenderingUtils.h; sourceTree = "<group>"; };
 		678834AE18185580001BA736 /* SDL_collide.h */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; path = SDL_collide.h; sourceTree = "<group>"; };
 		678834AF181855A3001BA736 /* SDL_collide.cpp */ = {isa = PBXFileReference; explicitFileType = sourcecode.cpp.objcpp; fileEncoding = 4; path = SDL_collide.cpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -62,6 +75,15 @@
 		67234AD81809D01E009E98A7 = {
 			isa = PBXGroup;
 			children = (
+				676BBD0D181BD8A600CBAA92 /* RenderingUtils.h */,
+				676BBCF5181BCD5800CBAA92 /* GameObject.cpp */,
+				676BBCF6181BCD5800CBAA92 /* GameObject.h */,
+				676BBCF8181BCE0300CBAA92 /* Grant.cpp */,
+				676BBCF9181BCE0300CBAA92 /* Grant.h */,
+				676BBCFB181BCE6300CBAA92 /* Timer.cpp */,
+				676BBCFC181BCE6300CBAA92 /* Timer.h */,
+				676BBD0A181BD17A00CBAA92 /* TileMap.cpp */,
+				676BBD0B181BD17A00CBAA92 /* TileMap.h */,
 				678834AF181855A3001BA736 /* SDL_collide.cpp */,
 				678834AE18185580001BA736 /* SDL_collide.h */,
 				67234AF41809D222009E98A7 /* Cocoa.framework */,
@@ -146,6 +168,10 @@
 				67234AF11809D1F4009E98A7 /* SDLMain.m in Sources */,
 				67234AE51809D01E009E98A7 /* main.cpp in Sources */,
 				678834B0181855A3001BA736 /* SDL_collide.cpp in Sources */,
+				676BBCF7181BCD5800CBAA92 /* GameObject.cpp in Sources */,
+				676BBCFA181BCE0300CBAA92 /* Grant.cpp in Sources */,
+				676BBCFD181BCE6300CBAA92 /* Timer.cpp in Sources */,
+				676BBD0C181BD17A00CBAA92 /* TileMap.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
