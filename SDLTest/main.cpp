@@ -70,8 +70,10 @@ int main(int argc, char ** argv)
         RenderingUtils::fill_colorkey(screen);
         
         //Show the background
-        RenderingUtils::apply_surface( 0, 0, background, screen, &camera );
+        //RenderingUtils::apply_surface( 0, 0, background, screen, &camera );
 
+        tileMap->drawMap(screen,&camera);
+        
         // logic of the game
         
         // move

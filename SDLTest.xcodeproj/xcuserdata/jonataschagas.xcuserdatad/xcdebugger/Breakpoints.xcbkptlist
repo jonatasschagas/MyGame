@@ -73,11 +73,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "RenderingUtils.h"
-         timestampString = "404500320.859726"
+         timestampString = "404699959.583661"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "55"
-         endingLineNumber = "55"
+         startingLineNumber = "57"
+         endingLineNumber = "57"
          landmarkName = "get_pixel32( SDL_Surface *surface, int x, int y )"
          landmarkType = "5">
       </FileBreakpoint>
@@ -86,11 +86,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509627.998976"
+         timestampString = "404692419.722833"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "22"
-         endingLineNumber = "22"
+         startingLineNumber = "25"
+         endingLineNumber = "25"
          landmarkName = "TileMap::loadMap()"
          landmarkType = "5">
       </FileBreakpoint>
@@ -99,11 +99,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509627.998976"
+         timestampString = "404699924.139235"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "112"
-         endingLineNumber = "112"
+         startingLineNumber = "121"
+         endingLineNumber = "121"
          landmarkName = "TileMap::collide(int x,int y,int w, int h)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -112,11 +112,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509627.998976"
+         timestampString = "404699924.139235"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
          landmarkName = "TileMap::collide(int x,int y,int w, int h)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -125,11 +125,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509627.998976"
+         timestampString = "404699924.139235"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "101"
-         endingLineNumber = "101"
+         startingLineNumber = "110"
+         endingLineNumber = "110"
          landmarkName = "TileMap::collide(int x,int y,int w, int h)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -138,11 +138,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509627.998976"
+         timestampString = "404699924.139235"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "113"
-         endingLineNumber = "113"
+         startingLineNumber = "122"
+         endingLineNumber = "122"
          landmarkName = "TileMap::collide(int x,int y,int w, int h)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -151,11 +151,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509782.864874"
+         timestampString = "404699924.139235"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "100"
-         endingLineNumber = "100"
+         startingLineNumber = "109"
+         endingLineNumber = "109"
          landmarkName = "TileMap::collide(int x,int y,int w, int h)"
          landmarkType = "5">
       </FileBreakpoint>
@@ -164,34 +164,34 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509788.99011"
+         timestampString = "404692654.465216"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "88"
-         endingLineNumber = "88">
+         startingLineNumber = "82"
+         endingLineNumber = "82">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509790.218186"
+         timestampString = "404692654.465216"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "87"
-         endingLineNumber = "87">
+         startingLineNumber = "81"
+         endingLineNumber = "81">
       </FileBreakpoint>
       <FileBreakpoint
          shouldBeEnabled = "No"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "SDLTest/TileMap.cpp"
-         timestampString = "404509938.502269"
+         timestampString = "404692654.465216"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "89"
-         endingLineNumber = "89"
-         landmarkName = "TileMap::drawMap(SDL_Surface* screen)"
+         startingLineNumber = "83"
+         endingLineNumber = "83"
+         landmarkName = "TileMap::drawMap(SDL_Surface* screen,SDL_Rect* camera)"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -231,6 +231,84 @@
          startingLineNumber = "168"
          endingLineNumber = "168"
          landmarkName = "GameObject::show()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692654.465216"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "74"
+         endingLineNumber = "74"
+         landmarkName = "TileMap::loadMap()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692419.722833"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
+         landmarkName = "TileMap::loadMap()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692419.722833"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "45"
+         endingLineNumber = "45"
+         landmarkName = "TileMap::loadMap()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692419.722833"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "TileMap::loadMap()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692654.465216"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "80"
+         endingLineNumber = "80"
+         landmarkName = "TileMap::loadMap()"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "No"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "SDLTest/TileMap.cpp"
+         timestampString = "404692419.722833"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "52"
+         endingLineNumber = "52"
+         landmarkName = "TileMap::loadMap()"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

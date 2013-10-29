@@ -11,6 +11,9 @@
 #include "RenderingUtils.h"
 #include <iostream>
 #include <fstream>
+#include <stdlib.h>
+#include <sstream>
+#include <cstdlib>
 
 using namespace std;
 
@@ -44,19 +47,14 @@ void TileMap::loadMap()
     
     int x = 0, y = 0;
     
-    ifstream map(TILEMAP_FILE);
+    fstream map(TILEMAP_FILE);
     
-    for( int t = 0; t < TOTAL_TILES; t++ )
+    int tileTypeId = -1;
+    
+    while(map.good())
     {
-        int tileTypeId = -1;
-        
-        map >> tileTypeId;
-        
-        if( map.fail() == true )
-        {
-            map.close();
-            return;
-        }
+        const char c = map.get();
+        tileTypeId = atoi(&c);
         
         if( ( tileTypeId >= 0 ) && ( tileTypeId < TILE_SPRITES ) )
         {
@@ -66,11 +64,7 @@ void TileMap::loadMap()
             tile->y = y;
             tile->tileType = tileType;
             tiles.push_back(tile);
-        }
-        else
-        {
-            map.close();
-            return;
+            //cout << tile->tileType->tileType ;
         }
         
         x += TILE_WIDTH;
@@ -78,15 +72,30 @@ void TileMap::loadMap()
         if( x >= LEVEL_WIDTH )
         {
             x = 0;
-            
+            cout << "\n" ;
             y += TILE_HEIGHT;
         }
     }
     
 }
 
-void TileMap::drawMap(SDL_Surface* screen)
+void TileMap::drawMap(SDL_Surface* screen,SDL_Rect* camera)
 {
+ 
+    /**
+     
+     
+     static void apply_surface( int x, int y, SDL_Surface* source, SDL_Surface* destination, SDL_Rect* clip = NULL )
+     {
+     SDL_Rect offset;
+     offset.x = x;
+     offset.y = y;
+     SDL_BlitSurface( source, clip, destination, &offset );
+     }
+     
+     
+     **/
+    
     for(vector<Tile*>::iterator it = tiles.begin(); it != tiles.end(); ++it) {
         Tile* tile = *it;
         if(tile)

@@ -20,9 +20,9 @@ using namespace std;
 
 const string TILEMAP_FILE = "/Users/jonataschagas/Documents/images/map.map";
 const string TILEMAP_SHEET = "/Users/jonataschagas/Documents/images/tile_sheet.jpg";
-const int TILE_WIDTH = 50;
-const int TILE_HEIGHT = 50;
-const int TOTAL_TILES = 192;
+const int TILE_WIDTH = 32;
+const int TILE_HEIGHT = 32;
+const int TOTAL_TILES = 1200;
 const int TILE_SPRITES = 2;
 
 // 0 for white
@@ -50,7 +50,7 @@ private:
 public:
     TileMap();  
     void loadMap();
-	void drawMap(SDL_Surface* screen);
+	void drawMap(SDL_Surface* screen,SDL_Rect* camera);
     bool collide(int x,int y,int w, int h);
     TileType* getTileById(int tileType);
 };
